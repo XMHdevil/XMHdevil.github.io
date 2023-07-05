@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>我的技术与生活——初次建站 | Hexo</title>
+  <title>我的技术与生活——react | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" href="/imgs/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/css/public.css" />
@@ -16,7 +16,7 @@
 
   <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
   <script>
-    document.title = `我的技术与生活——初次建站`
+    document.title = `我的技术与生活——react`
   </script>
 <meta name="generator" content="Hexo 6.3.0"></head>
 
@@ -365,25 +365,132 @@ pre:active {
 
 <div class="article-container">
   <div class="article">
-    <h1 class="article-title">初次建站</h1>
+    <h1 class="article-title">react</h1>
     <div class="article-info">
       <div class="article-info--item">
         <div class="article-info--info">
           
+          <div class="article-info--categories">
+            <span>分类：</span>
+            <a class="category-link" href="/categories/react/">React</a>
+          </div>
           
-          <p class="article-info--date">日期：2023-07-03 17:02:43</p>
+          
+          <div class="article-info--tags">
+            <span>标签：</span>
+            <a class="tag-link" href="/tags/react%E6%A1%86%E6%9E%B6/" rel="tag">react框架</a>
+          </div>
+          
+          <p class="article-info--date">日期：2023-07-05 18:34:22</p>
         </div>
         <img src="/imgs/default-cover.webp" alt="" class="article-cover">
       </div>
     </div>
     <article class="article-content">
-      <h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>很是迷茫</p>
+      <h2 id="react基础"><a href="#react基础" class="headerlink" title="react基础"></a>react基础</h2><h3 id="一、react特点"><a href="#一、react特点" class="headerlink" title="一、react特点"></a>一、react特点</h3><ol>
+<li>采用组件化模式、声明式编码，提高开发效率及组件复用率</li>
+<li>在React Native中可以使用React语法进行移动端开发</li>
+<li>使用虚拟DOM+Diffing算法，尽量减少与真实DOM的交互</li>
+</ol>
+<h3 id="二、需要掌握的js知识"><a href="#二、需要掌握的js知识" class="headerlink" title="二、需要掌握的js知识"></a>二、需要掌握的js知识</h3><p>判断this指向</p>
+<p>class（类）</p>
+<p>ES6语法规范</p>
+<p>npm包管理器</p>
+<p>原型、原型链</p>
+<p>数组常用方法</p>
+<p>模块化</p>
+<h3 id="三、虚拟DOM与真实DOM"><a href="#三、虚拟DOM与真实DOM" class="headerlink" title="三、虚拟DOM与真实DOM"></a>三、虚拟DOM与真实DOM</h3><ol>
+<li><p>React提供了一些API来创建一种 “特别” 的一般js对象</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">const VOM = React.createElement('xx',&#123;id: 'xx'&#125;, 'xx')<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+</li>
+<li><p>虚拟DOM对象最终都会被React转换为真实的DOM</p>
+</li>
+</ol>
+<h3 id="四、JSX"><a href="#四、JSX" class="headerlink" title="四、JSX"></a>四、JSX</h3><p>全称：JavaScript XML</p>
+<p>用来简化创建虚拟DOM</p>
+<p>便签名任意，属性任意，</p>
+<p>基本语法规则：</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token number">1</span>、 遇到 <span class="token operator">&lt;</span>开头的代码<span class="token punctuation">,</span> 以标签的语法解析<span class="token operator">:</span> html同名标签转换为html同名元素<span class="token punctuation">,</span> 其它标签需要特别解析
+
+<span class="token number">2</span>、 遇到以 <span class="token string">'&#123;'</span> 开头的代码，以<span class="token constant">JS</span>语法解析<span class="token operator">:</span> 标签中的js表达式必须用<span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span>包含
+
+babel<span class="token punctuation">.</span>js的作用
+
+<span class="token number">1.</span>浏览器不能直接解析<span class="token constant">JSX</span>代码，需要babel转义为纯js的代码才能运行
+
+<span class="token number">2</span>、只要用了<span class="token constant">JSX</span> ，都要加上type<span class="token operator">=</span>“text<span class="token operator">/</span>babel”，声明需要babel来处理
+
+
+
+<span class="token constant">JSX</span>语法规则
+<span class="token number">1</span>、定义虚拟<span class="token constant">DOM</span>时，不要写引号
+<span class="token number">2</span>、标签中混入<span class="token constant">JS</span>表达式时要用<span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token number">3</span>、样式类名指定不要用<span class="token keyword">class</span>，要用className
+<span class="token number">4</span>、内联样式，要用style<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span>key<span class="token operator">:</span>value<span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span>的形式去写
+<span class="token number">5</span>、只有一个根标签
+<span class="token number">6</span>、标签必须闭合
+<span class="token number">7</span>、标签首字母
+（<span class="token number">1</span>）、若小写字母开头，则将标签转为html中同名元素，若html中元素无该标签对应的同名元素，则报错。
+<span class="token function">​</span>	<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>、若大写字母开头，react就去渲染对应的组件，若组件没有定义，则报错。
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p><code>注意区分：【js语句（代码）】与【js表达式】</code></p>
+<p>​	1、表达式： 一个表达式会产生一个值，可以放在任何一个需要值的地方</p>
+<p>例如：</p>
+<pre class="line-numbers language-typescript" data-language="typescript"><code class="language-typescript"><span class="token operator">-</span> a
+
+<span class="token operator">-</span> a<span class="token operator">+</span>b
+
+<span class="token operator">-</span> <span class="token function">demo</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+<span class="token operator">-</span> arr<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token operator">-</span> <span class="token keyword">function</span> <span class="token function">test</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+  <span class="token number">2</span>、语句（代码）：
+
+例如：
+
+<span class="token operator">-</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token operator">-</span> <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token operator">-</span> <span class="token keyword">switch</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token keyword">case</span><span class="token operator">:</span>xxx<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="五、模块与组件"><a href="#五、模块与组件" class="headerlink" title="五、模块与组件"></a>五、模块与组件</h3><h4 id="1）、模块"><a href="#1）、模块" class="headerlink" title="1）、模块"></a>1）、模块</h4><p>作用：复用js，简化js的编写，提高js运行效率</p>
+<p>模块化：当应用的js都以模块来编写的，这个应用就是一个模块化的作用</p>
+<h4 id="2）、组件"><a href="#2）、组件" class="headerlink" title="2）、组件"></a>2）、组件</h4><p>作用： 复用编码，简化项目编写，提高运行效率</p>
+<p>组件化：当应用是以多组件的方式实现，这个应用就是一个组件化 的应用</p>
+<h3 id="六、React面向组件编程"><a href="#六、React面向组件编程" class="headerlink" title="六、React面向组件编程"></a>六、React面向组件编程</h3><h4 id="函数式组件"><a href="#函数式组件" class="headerlink" title="函数式组件"></a>函数式组件</h4><h4 id="类组件"><a href="#类组件" class="headerlink" title="类组件"></a>类组件</h4><p>类的基本知识</p>
+<p>1、类中的构造器不是必须要写的，要对实例进行一些初始化的操作，如添加指定属性的时才写。</p>
+<p>2、如果A类继承了B类，且A类中写了构造器，那么A类构造器中的super是必须要调用的。</p>
+<p>3、类中所定义的方法，都放在了类的原型对象上，供实例去使用。</p>
+<blockquote>
+<p>执行ReactDom.render(<MyComponent/>)…之后，发生了什么？</p>
+<ol>
+<li>React解析组件标签，找到MyComponent组件。</li>
+<li>发现组价是使用类定义的，随后new出来该类的实例，并通过该实例调用原型上的reader函数</li>
+<li>将render返回的虚拟DOM转为真实DOM，随后呈现在页面中。</li>
+</ol>
+</blockquote>
+<p>组件实例的三大属性：</p>
+<ol>
+<li>state</li>
+<li>props</li>
+<li>refs</li>
+</ol>
+<p>对props进行限制</p>
+<p>通过propTypes来对标签属性进行类型，必要性的限制</p>
+<p>通过defaultProps来指定标签属性值</p>
+<p>函数组件可以使用props，因为函数可以传入参数，props可以当做参数传入，</p>
+<h4 id="ref有两种形式"><a href="#ref有两种形式" class="headerlink" title="ref有两种形式"></a>ref有两种形式</h4><p>1、 字符串形式，旧版</p>
+<p>2、回调函数形式</p>
 
     </article>
     
     <div class="read-nums">
       <!-- id 将作为查询条件 -->
-      <span id="log/oneday.html" class="leancloud_visitors" data-flag-title="Your Article Title">
+      <span id="2023/07/05/react基础/" class="leancloud_visitors" data-flag-title="Your Article Title">
         <em class="post-meta-item-text">浏览量</em>
         <i class="leancloud-visitors-count"></i>
       </span>
@@ -399,9 +506,24 @@ pre:active {
     <div class="article-catelogue--wrapper">
       <div class="catelogue catelogue-1">
         <h3>目录</h3>
-        <!-- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text"></span></a></li></ol> -->
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li></ol>
+        <!-- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#react%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">react基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81react%E7%89%B9%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text">一、react特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%9C%80%E8%A6%81%E6%8E%8C%E6%8F%A1%E7%9A%84js%E7%9F%A5%E8%AF%86"><span class="toc-number">1.2.</span> <span class="toc-text">二、需要掌握的js知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%99%9A%E6%8B%9FDOM%E4%B8%8E%E7%9C%9F%E5%AE%9EDOM"><span class="toc-number">1.3.</span> <span class="toc-text">三、虚拟DOM与真实DOM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81JSX"><span class="toc-number">1.4.</span> <span class="toc-text">四、JSX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%A8%A1%E5%9D%97%E4%B8%8E%E7%BB%84%E4%BB%B6"><span class="toc-number">1.5.</span> <span class="toc-text">五、模块与组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%BC%89%E3%80%81%E6%A8%A1%E5%9D%97"><span class="toc-number">1.5.1.</span> <span class="toc-text">1）、模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%EF%BC%89%E3%80%81%E7%BB%84%E4%BB%B6"><span class="toc-number">1.5.2.</span> <span class="toc-text">2）、组件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81React%E9%9D%A2%E5%90%91%E7%BB%84%E4%BB%B6%E7%BC%96%E7%A8%8B"><span class="toc-number">1.6.</span> <span class="toc-text">六、React面向组件编程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6"><span class="toc-number">1.6.1.</span> <span class="toc-text">函数式组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E7%BB%84%E4%BB%B6"><span class="toc-number">1.6.2.</span> <span class="toc-text">类组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ref%E6%9C%89%E4%B8%A4%E7%A7%8D%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.6.3.</span> <span class="toc-text">ref有两种形式</span></a></li></ol></li></ol></li></ol> -->
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#react%E5%9F%BA%E7%A1%80"><span class="toc-text">react基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81react%E7%89%B9%E7%82%B9"><span class="toc-text">一、react特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%9C%80%E8%A6%81%E6%8E%8C%E6%8F%A1%E7%9A%84js%E7%9F%A5%E8%AF%86"><span class="toc-text">二、需要掌握的js知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%99%9A%E6%8B%9FDOM%E4%B8%8E%E7%9C%9F%E5%AE%9EDOM"><span class="toc-text">三、虚拟DOM与真实DOM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81JSX"><span class="toc-text">四、JSX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%A8%A1%E5%9D%97%E4%B8%8E%E7%BB%84%E4%BB%B6"><span class="toc-text">五、模块与组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%EF%BC%89%E3%80%81%E6%A8%A1%E5%9D%97"><span class="toc-text">1）、模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%EF%BC%89%E3%80%81%E7%BB%84%E4%BB%B6"><span class="toc-text">2）、组件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81React%E9%9D%A2%E5%90%91%E7%BB%84%E4%BB%B6%E7%BC%96%E7%A8%8B"><span class="toc-text">六、React面向组件编程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BB%84%E4%BB%B6"><span class="toc-text">函数式组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E7%BB%84%E4%BB%B6"><span class="toc-text">类组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ref%E6%9C%89%E4%B8%A4%E7%A7%8D%E5%BD%A2%E5%BC%8F"><span class="toc-text">ref有两种形式</span></a></li></ol></li></ol></li></ol>
       </div>
+      
+        <div class="catelogue catelogue-2">
+          
+            <p>
+              <span>上一篇：</span>
+              <a href="/2023/07/05/常用js函数/">常用函数(js)</a>
+            </p>
+           
+          
+            <p>
+              <span>下一篇</span>
+              <a href="/2023/07/05/vue中的装饰器/">vue-property-decorator</a>
+            </p>
+          
+        </div>
       
     </div>
   </div>
@@ -421,7 +543,7 @@ pre:active {
     recordIP: config.recordIP,
     visitor: config.visitor,
     enableQQ: config.enableQQ,
-    path: 'log/oneday.html'
+    path: '2023/07/05/react基础/'
   })
 </script>
 

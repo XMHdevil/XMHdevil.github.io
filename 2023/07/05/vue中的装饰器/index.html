@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>我的技术与生活——vue-property-decorator | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="/imgs/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/public.css" />
+  <link rel="stylesheet" href="/css/layout.css" />
+  <link rel="stylesheet" href="/css/iconfont.css" />
+  <link rel="stylesheet" href="/css/APlayer.min.css" />
+  <script src="/js/APlayer.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/jquery.pjax.min.js"></script>
+
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script>
+    document.title = `我的技术与生活——vue-property-decorator`
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<style>
+  .load {
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(37, 35, 40);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 9999;
+  }
+  .load-circle {
+    width: 80px;
+    height: 80px;
+    border: 8px solid orange;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: rotate 1s linear infinite;
+    filter: drop-shadow(0 0 3px orange);
+  }
+  .load-circle-inner {
+    width: 40px;
+    height: 40px;
+    border: 8px solid orange;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: rotate-reverse .5s linear infinite;
+  }
+  .load-text {
+    margin-top: 20px;
+    font-size: 24px;
+    color: orange;
+    display: flex;
+  }
+  .load-text span {
+    margin: 0 5px;
+    text-shadow: 5px 5px 5px orange;
+    animation: move 1s linear infinite;
+  }
+  .load-text span:nth-child(1) {
+    animation-delay: -0.6s;
+  }
+  .load-text span:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  .load-text span:nth-child(3) {
+    animation-delay: -0.4s;
+  }
+  .load-text span:nth-child(4) {
+    animation-delay: -0.3s;
+  }
+  .load-text span:nth-child(5) {
+    animation-delay: -0.2s;
+  }
+  .load-text span:nth-child(6) {
+    animation-delay: -0.1s;
+  }
+  @keyframes rotate {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes rotate-reverse {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(-360deg); }
+  }
+  @keyframes move {
+    0% { transform: translateY(0%) rotate(0) scale(1); }
+    20% { transform: translateY(20%) rotate(10deg) scale(1.2); }
+    80% { transform: translateY(-10%) rotate(-20deg) scale(.8);}
+    100% { transform: translateY(0) rotate(0) scale(1); }
+  }
+
+  .progress {
+    position: fixed;
+    left: 0; top: 0;
+    width: 0;
+    height: 3px;
+    background-color: green;
+    transition: all cubic-bezier(0.215, 0.610, 0.355, 1) .1s;
+    z-index: 9999;
+  }
+
+  .to-up {
+    animation: toUp .5s 1;
+  }
+  .gray {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    display: none;
+    pointer-events: none;
+    background-color: #000;
+    mix-blend-mode: color;
+  }
+  @keyframes toUp {
+    from { transform: translateY(15px); opacity: 0; }
+    to { transform: translateY(0) ; opacity: 1; }
+  }
+</style>
+<body>
+  <div id="load" class="load">
+    <div class="load-circle">
+      <div class="load-circle-inner"></div>
+    </div>
+    <p class="load-text">
+      <span>L</span>
+      <span>O</span>
+      <span>A</span>
+      <span>D</span>
+      <span>I</span>
+      <span>N</span>
+      <span>G</span>
+    </p>
+  </div>
+  <div id="container" class="container w-100 vh-100" style="display: none;">
+    <header class="header">
+  <div class="header-wrapper">
+    <div class="header-left">
+      <div class="header-search">
+        <input id="search-input" type="text" class="header-search--input" placeholder="请输入要检索的文章标题" />
+        <span id="search-btn" class="header-search--icon"><i class="iconfont icon-sousuo"></i></span>
+      </div>
+      <div id="search-layer" class="header-search--layer hidden">
+        <p class="title">
+          <span>以下是搜索内容：</span>
+          <span id="close-layer-btn">关闭</span>
+        </p>
+        <ul>
+        </ul>
+      </div>
+    </div>
+    <div class="header-right">
+      <ul class="header-menu">
+        <li>
+          <!-- <a href="http://example.com/"> -->
+          <a href="/">
+            <i class="header-menu--icon iconfont icon-shouye"></i>
+            <span class="header-menu--span">首页</span>
+          </a>
+        </li>
+        <li>
+          <a href="/log">
+            <i class="header-menu--icon iconfont icon-rizhi"></i>
+            <span class="header-menu--span">日志</span>
+          </a>
+        </li>
+        <!-- <li>
+          <a href="/link">
+            <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
+            <span class="header-menu--span">友情链接</span>
+          </a>
+        </li> -->
+        <li>
+          <a href="/about">
+            <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
+            <span class="header-menu--span">关于我</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const ipt = document.querySelector('#search-input')
+  const btn = document.querySelector('#search-btn')
+  const layer = document.querySelector('#search-layer')
+  const posts = JSON.parse(`[{"title":"SVG","path":"2023/07/05/SVG/"},{"title":"Canvas","path":"2023/07/05/Canvas/"},{"title":"CSS","path":"2023/07/05/css/"},{"title":"Hello World","path":"2023/07/03/hello-world/"},{"title":"react","path":"2023/07/05/react基础/"},{"title":"TypeScript","path":"2023/07/03/typeScript/"},{"title":"vue-property-decorator","path":"2023/07/05/vue中的装饰器/"},{"title":"浏览器兼容问题","path":"2023/07/04/前端浏览器兼容问题/"},{"title":"浏览器的工作原理","path":"2023/07/04/浏览器的工作原理/"},{"title":"webstorm","path":"2023/07/05/webstorm/"},{"title":"常用函数(js)","path":"2023/07/05/常用js函数/"}]`)
+  ipt.addEventListener('keyup', e => {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
+  })
+  btn.addEventListener('click', () => {
+    handleSearch()
+  })
+
+  document.querySelector('#close-layer-btn').addEventListener('click', () => {
+    layer.classList.toggle('hidden')
+  })
+
+  function handleSearch() {
+    if (ipt.value.trim() === '') {
+      return
+    }
+    let html = ''
+    const targetPosts = posts.filter(post => post.title.includes(ipt.value))
+    targetPosts.forEach(post => {
+      html += `
+        <li>
+          <div>
+            <a href="/${post.path}">${post.title.replace(new RegExp(ipt.value), `<span>${ipt.value}</span>`)}</a>
+          </div>
+          <img src="${post.cover || '/imgs/default-cover.webp' }" />
+        </li>
+      `
+    })
+    if (html.trim () === '') {
+      html += '<p class="empty">没有搜索到内容</p>'
+    }
+    layer.querySelector('ul').innerHTML = html
+    layer.classList.remove('hidden')
+  }
+</script> 
+    <section id="main" class="main">
+      <div class="main-left-wrapper">
+<div class="main-left">
+  <div class="main-left--block">
+    <div class="main-left--info">
+      <img src="/imgs/favicon.jpg"" class="main-left--avatar" />
+      <div class="main-left--intro">
+        <p class="main-left--name">Xmh.</p>
+        <div class="main-left--tags">
+          <span class="main-left--tag">幻想</span>
+          <span class="main-left--tag">静</span>
+        </div>
+      </div>
+    </div>
+  
+    <div>
+      <div class="main-left--motto">
+        <p>“快乐和痛苦并存”</p>
+        <p>“我的快乐小站”</p>
+      </div>
+      <div class="main-left--github">
+        <span class="line"></span>
+        <a target="_blank" rel="noopener" href="https://github.com/XMHdevil"><i class="logo iconfont icon-github-fill"></i></a>
+        <span class="line"></span>
+      </div>
+      <div class="main-left--statics">
+        <a href="/categories">
+          <div>
+            <span>7</span>
+            <span>分类</span>
+          </div>
+        </a>
+        <a href="/tags">
+          <div>
+            <span>10</span>
+            <span>标签</span>
+          </div>
+        </a>
+        <a href="/archives">
+          <div>
+            <span>1 </span>
+            <span>归档</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-left--block">
+    <ul class="main-left--menu">
+      
+        <li>
+          <a href="/">
+            <span class="header-menu--span">小站首页</span>
+            <i class="header-menu--icon iconfont icon-shouye"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/log">
+            <span class="header-menu--span">个人日志</span>
+            <i class="header-menu--icon iconfont icon-rizhi"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/about">
+            <span class="header-menu--span">关于自己</span>
+            <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/tools">
+            <span class="header-menu--span">我的工具</span>
+            <i class="header-menu--icon iconfont icon-gongju"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="main-left--block">
+    <div class="main-left--site">
+      <h5 class="main-left--title">
+        <span>站点信息</span>
+        <i class="iconfont icon-zhandian"></i>
+      </h5>
+      <p class="main-left--subtitle">
+        <span>文章数目：</span>
+        <span>11 篇</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>最近动态：</span>
+        <span>今天</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>上线时间：</span>
+        <span>3天</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>当前版本：</span>
+        <span>v1.0.2</span>
+      </p>
+    </div>
+  </div>
+</div></div>
+      <div id="main-container" class="main-container">
+
+
+  <style>
+pre::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+  background-color:#F5F5F5;
+}
+/*定义滚动条轨道
+内阴影+圆角*/
+pre::-webkit-scrollbar-track {
+  background-color:#F5F5F5;
+}
+/*定义滑块
+内阴影+圆角*/
+pre::-webkit-scrollbar-thumb {
+  background-color: rgb(69, 83, 100);
+}
+
+pre:active {
+  background-color: rgb(81, 95, 116);
+}
+</style>
+
+<div class="article-container">
+  <div class="article">
+    <h1 class="article-title">vue-property-decorator</h1>
+    <div class="article-info">
+      <div class="article-info--item">
+        <div class="article-info--info">
+          
+          <div class="article-info--categories">
+            <span>分类：</span>
+            <a class="category-link" href="/categories/vue/">Vue</a>
+          </div>
+          
+          
+          <div class="article-info--tags">
+            <span>标签：</span>
+            <a class="tag-link" href="/tags/vue%E8%A3%85%E9%A5%B0%E5%99%A8/" rel="tag">vue装饰器</a>
+          </div>
+          
+          <p class="article-info--date">日期：2023-07-05 18:32:31</p>
+        </div>
+        <img src="/imgs/default-cover.webp" alt="" class="article-cover">
+      </div>
+    </div>
+    <article class="article-content">
+      <h1 id="vue-property-decorator"><a href="#vue-property-decorator" class="headerlink" title="vue-property-decorator"></a>vue-property-decorator</h1><p>安装<br>引入<br>@Component<br>registerHooks<br>data<br>computed<br>@Prop<br>@PropSync<br>@Watch<br>@Ref<br>@Emit<br>@Model<br>@Provide&#x2F;@Inject&#x2F;@ProvideReactive&#x2F;@InjectReactive<br>Mixins (在vue-class-component中定义)</p>
+<p>怎么使vue支持ts写法呢,我们需要用到 vue-property-decorator，这个库完全依赖于 vue-class-component.</p>
+<h2 id="一？安装"><a href="#一？安装" class="headerlink" title="一？安装"></a>一？安装</h2><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">npm i <span class="token operator">-</span><span class="token constant">D</span> vue<span class="token operator">-</span>proporty<span class="token operator">-</span>decorator<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="二？引入"><a href="#二？引入" class="headerlink" title="二？引入"></a>二？引入</h2><p>当我们在vue单文件中使用TypeScript时,引入vue-property-decorator之后,script中的标签就变为这样:</p>
+<script lang="ts"></script>
+
+<h2 id="三？-Component"><a href="#三？-Component" class="headerlink" title="三？@Component"></a>三？@Component</h2><p>注： 该属性完全继承于vue-class-component<br>属性参数：@Component(options: ComponentOptions &#x3D; {})<br>参数说明：@Component 装饰器可以接收一个对象作为参数，可以在对象中声明 components ，filters，directives, beforeRouteLeave等未提供装饰器的选项，也可以声明computed，watch等</p>
+<p>registerHooks<br>除了将beforeRouteLeave放在Component中之外,还可以全局注册,就是registerHooks</p>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token operator">&lt;</span>script lang<span class="token operator">=</span><span class="token string">"ts"</span><span class="token operator">></span>
+<span class="token keyword">import</span> <span class="token punctuation">&#123;</span> Component<span class="token punctuation">,</span> Vue <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'vue-property-decorator'</span>
+
+Component<span class="token punctuation">.</span><span class="token function">registerHooks</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+  <span class="token string">'beforeRouteLeave'</span><span class="token punctuation">,</span>
+  <span class="token string">'beforeRouteEnter'</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+@Component
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token keyword">extends</span> <span class="token class-name">Vue</span> <span class="token punctuation">&#123;</span> 
+  <span class="token function">beforeRouteEnter</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">to</span><span class="token operator">:</span> any<span class="token punctuation">,</span> <span class="token literal-property property">from</span><span class="token operator">:</span> any<span class="token punctuation">,</span> <span class="token literal-property property">next</span><span class="token operator">:</span> any</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'beforeRouteEnter'</span><span class="token punctuation">)</span>
+    <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token function">beforeRouteLeave</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">to</span><span class="token operator">:</span> any<span class="token punctuation">,</span> <span class="token literal-property property">from</span><span class="token operator">:</span> any<span class="token punctuation">,</span> <span class="token literal-property property">next</span><span class="token operator">:</span> any</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'beforeRouteLeave'</span><span class="token punctuation">)</span>
+    <span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">data
+对于data里的变量类型<span class="token punctuation">,</span>我们可以直接按ts定义类变量的写法写就可以
+
+<span class="token operator">&lt;</span>script lang<span class="token operator">=</span><span class="token string">"ts"</span><span class="token operator">></span>
+	 <span class="token keyword">import</span> <span class="token punctuation">&#123;</span>Vue<span class="token punctuation">,</span> Component<span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'vue-property-decorator'</span><span class="token punctuation">;</span>
+
+    @Component
+    <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token string">"组件名"</span> <span class="token keyword">extends</span> <span class="token class-name">Vue</span><span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">ValA</span><span class="token operator">:</span> string <span class="token operator">=</span> <span class="token string">'hello world'</span><span class="token punctuation">;</span>
+        <span class="token literal-property property">ValB</span><span class="token operator">:</span> number <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span>
+等同于
+
+<span class="token operator">&lt;</span>script<span class="token operator">></span>
+    <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+                <span class="token literal-property property">ValA</span><span class="token operator">:</span> <span class="token string">'hello world'</span><span class="token punctuation">,</span>
+                <span class="token literal-property property">ValB</span><span class="token operator">:</span> <span class="token number">1</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">computed
+对于Vue中的计算属性<span class="token punctuation">,</span>我们只需要将该计算属性名定义为一个函数<span class="token punctuation">,</span>并在函数前加上<span class="token keyword">get</span>关键字即可<span class="token punctuation">.</span>原本Vue中的computed里的每个计算属性都变成了在前缀添加<span class="token keyword">get</span>的函数<span class="token punctuation">.</span>
+
+<span class="token operator">&lt;</span>script lang<span class="token operator">=</span><span class="token string">"ts"</span><span class="token operator">></span>
+    <span class="token keyword">import</span> <span class="token punctuation">&#123;</span>Vue<span class="token punctuation">,</span> Component<span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'vue-property-decorator'</span><span class="token punctuation">;</span>
+
+    @Component
+    <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token string">"组件名"</span> <span class="token keyword">extends</span> <span class="token class-name">Vue</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">get</span> <span class="token function">ValA</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span>
+
+等同于
+
+<span class="token operator">&lt;</span>script<span class="token operator">></span>
+    <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span>
+        <span class="token literal-property property">computed</span><span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+            <span class="token function-variable function">ValA</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="四？-Prop"><a href="#四？-Prop" class="headerlink" title="四？@Prop"></a>四？@Prop</h2><p>属性参数：@Prop(options: (PropOptions | Constructor[] | Constructor) &#x3D; {})<br>参数说明：@Prop装饰器接收一个参数，这个参数可以有三种写法：<br>PropOptions，可以使用以下选项：type（类型），default（默认值），required（必填），validator（验证函数）;<br>Constructor[]，指定 prop 的可选类型；<br>Constructor，例如String，Number，Boolean等，指定 prop 的类型；</p>
+<p>注意：属性的ts类型后面需要加上undefined类型；或者在属性名后面加上!，表示非null 和 非undefined的断言，告诉TypeScript我这里一定有值，否则编译器会给出错误提示；</p>
+<p>比如子组件从父组件接收三个属性propA,propB,propC</p>
+<p>propA类型为Number<br>propB默认值为default value<br>propC类型为String或者Boolean</p>
+<p>export default {<br>  props: {<br>    propA: {<br>      type: Number<br>    },<br>    propB: {<br>      default: ‘default value’<br>    },<br>    propC: {<br>      type: [String, Boolean]<br>    },<br>  }<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>我们使用vue-property-decorator提供的@Prop可以将上面的代码改造为如下:</p>
+<script lang="ts">
+    import {Vue, Component, Prop} from 'vue-property-decorator';
+
+    @Component
+    export default class "组件名" extends Vue{
+        @Prop(Number) propA!: number;
+        @Prop({default: 'default value'}) propB!: string;
+        @prop([String, Boolean]) propC: string | boolean;
+    }
+</script>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>总结: @Prop接受一个参数可以是类型变量或者对象或者数组.@Prop接受的类型比如Number是JavaScript的类型,之后定义的属性类型则是TypeScript的类型.</p>
+<p>@PropSync<br>属性参数：@PropSync(propName: string, options: (PropOptions | Constructor[] | Constructor) &#x3D; {})</p>
+<p>@PropSync装饰器与@prop用法类似，二者的区别在于：</p>
+<p>@PropSync 装饰器接收两个参数：<br>propName: string 表示父组件传递过来的属性名；<br>options: Constructor | Constructor[] | PropOptions 与@Prop的第一个参数一致；<br>@PropSync 会生成一个新的计算属性。<br>注意：使用PropSync的时候是要在父组件配合.sync使用的</p>
+<p>示例：</p>
+<p>&#x2F;&#x2F; 父组件<br><template><br>  <div class="PropSync"><br>    <h1>父组件</h1><br>    like:<br>    <hr/><br>    <PropSyncComponent :like.sync="like"></PropSyncComponent><br>  </div><br></template></p>
+<script lang='ts'>
+import { Vue, Component } from 'vue-property-decorator';
+import PropSyncComponent from '@/components/PropSyncComponent.vue';
+
+@Component({components: { PropSyncComponent },})
+export default class PropSyncPage extends Vue {
+  private like = '父组件的like';
+}
+</script>
+
+<p>&#x2F;&#x2F; 子组件<br><template><br>  <div class="hello"><br>    <h1>子组件:</h1><br>    <h2>syncedlike:</h2><br>    &lt;button @click&#x3D;”editLike()”&gt;修改like</button><br>  </div><br></template></p>
+<script lang="ts">
+import { Component, Prop, Vue, PropSync,} from 'vue-property-decorator';
+
+@Component
+export default class PropSyncComponent extends Vue {
+  @PropSync('like', { type: String }) syncedlike!: string; // 用来实现组件的双向绑定,子组件可以更改父组件穿过来的值
+
+  editLike(): void {
+    this.syncedlike = '子组件修改过后的syncedlike!'; // 双向绑定,更改syncedlike会更改父组件的like
+  }
+}
+</script>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>@Watch<br>属性参数：@Watch(path: string, options: WatchOptions &#x3D; {})</p>
+<p>参数说明：@Watch 装饰器接收两个参数：</p>
+<p>path: string 被侦听的属性名；<br>options?: WatchOptions&#x3D;{} options可以包含两个属性 ：<br>immediate?:boolean 侦听开始之后是否立即调用该回调函数；<br>deep?:boolean 被侦听的对象的属性被改变时，是否调用该回调函数；<br>我们可以利用vue-property-decorator提供的@Watch装饰器来替换Vue中的watch属性,以此来监听值的变化.</p>
+<p>在Vue中监听器的使用如下:</p>
+<p>export default{<br>    watch: {<br>        ‘child’: this.onChangeValue, &#x2F;&#x2F; 这种写法默认 <code>immediate</code>和<code>deep</code>为<code>false</code><br>        ‘person’: {<br>            handler: ‘onChangeValue’,<br>            immediate: true,<br>            deep: true<br>        }<br>    },<br>    methods: {<br>        onChangeValue(newVal, oldVal){<br>            &#x2F;&#x2F; todo…<br>        }<br>    }<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>那么我们如何使用@Watch装饰器来改造它呢?</p>
+<p>import {Vue, Component, Watch} from ‘vue-property-decorator’;</p>
+<p>@Watch(‘child’)<br>onChangeValue(newVal: string, oldVal: string){<br>    &#x2F;&#x2F; todo…<br>}</p>
+<p>@Watch(‘person’, {immediate: true, deep: true})<br>onChangeValue(newVal: Person, oldVal: Person){<br>    &#x2F;&#x2F; todo…<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>总结: @Watch使用非常简单,接受第一个参数为要监听的属性名 第二个属性为可选对象.@Watch所装饰的函数即监听到属性变化之后的操作.</p>
+<p>@Ref<br>属性参数：@Ref(refKey?: string)</p>
+<p>参数说明：@Ref 装饰器接收一个可选参数，用来指向元素或子组件的引用信息。如果没有提供这个参数，会使用装饰器后面的属性名充当参数</p>
+<template>
+  <div class="PropSync">
+    <button @click="getRef()" ref="aButton">获取ref</button>
+    <RefComponent name="names" ref="RefComponent"></RefComponent>
+  </div>
+</template>
+
+<script lang="ts">
+import { Vue, Component, Ref } from 'vue-property-decorator';
+import RefComponent from '@/components/RefComponent.vue';
+
+@Component({
+  components: { RefComponent },
+})
+export default class RefPage extends Vue {
+  @Ref('RefComponent') readonly RefC!: HTMLDocument;
+  @Ref('aButton') readonly ref!: HTMLButtonElement;
+  getRef() {
+    console.log(this.RefC);
+    console.log(this.ref);
+  }
+}
+</script>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>@Emit<br>属性参数：@Emit(event?: string)<br>参数说明：</p>
+<p>@Emit 装饰器接收一个可选参数，充当事件名。如果没有提供这个参数，@Emit会将回调函数名的camelCase转为kebab-case，并将其作为事件名；<br>@Emit的回调函数的参数，会在回调函数没有返回值的情况下，被$emit当做第二个参数使用。<br>@Emit会将回调函数的返回值作为第二个参数，如果返回值是一个Promise对象，$emit会在Promise对象被标记为resolved之后触发；</p>
+<script lang="ts">
+    import {Vue, Component, Emit} from 'vue-property-decorator';
+
+    @Component
+    export default class "组件名" extends Vue{
+        mounted(){
+            this.$on('emit-todo', function(n) {
+                console.log(n)
+            })
+    
+            this.emitTodo('world');
+        }
+    
+        @Emit()
+        emitTodo(n: string){
+            console.log('hello');
+        }
+    }
+</script>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>运行上面的代码会打印 ‘hello’ ‘world’, 为什么呢? 让我们来看看它等同于什么</p>
+<script>
+    import Vue from 'vue';
+
+    export default {
+        mounted(){
+            this.$on('emit-todo', function(n) {
+                console.log(n)
+            })
+    
+            this.emitTodo('world');
+        },
+        methods: {
+            emitTodo(n){
+                console.log('hello');
+                this.$emit('emit-todo', n);
+            }
+        }
+    }
+</script>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>可以看到,在@Emit装饰器的函数会在运行之后触发等同于其函数名(驼峰式会转为横杠式写法)的事件, 并将其参数传递给$emit.<br>如果我们想触发特定的事件呢,比如在emitTodo下触发reset事件:</p>
+<script lang="ts">
+    import {Vue, Component, Emit} from 'vue-property-decorator';
+
+    @Component
+    export default class "组件名" extends Vue{
+    
+        @Emit('reset')
+        emitTodo(n: string){
+    
+        }
+    }
+</script>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>我们只需要给装饰器@Emit传递一个事件名参数reset,这样函数emitTodo运行之后就会触发reset事件.</p>
+<p>@Model<br>默认情况下，一个组件上的v-model 会把 value用作 prop且把 input用作 event，但是一些输入类型比如单选框和复选框按钮可能想使用 value prop来达到不同的目的。使用model选项可以回避这些情况产生的冲突。</p>
+<p>下面是Vue官网的例子</p>
+<p>Vue.component(‘base-checkbox’, {<br>  model: {<br>    prop: ‘checked’,<br>    event: ‘change’<br>  },<br>  props: {<br>    checked: Boolean<br>  },<br>  template: <code>    &lt;input       type=&quot;checkbox&quot;       v-bind:checked=&quot;checked&quot;       v-on:change=&quot;$emit(&#39;change&#39;, $event.target.checked)&quot;     &gt;  </code><br>})<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br><base-checkbox v-model="lovingVue"></base-checkbox><br>1<br>注意：你仍然需要在组件的 props 选项里声明 checked 这个 prop。</p>
+<p>使用vue-property-decorator提供的@Model改造上面的例子。</p>
+<p>import { Vue, Component, Model} from ‘vue-property-decorator’;</p>
+<p>@Component<br>export class myCheck extends Vue{<br>   @Model (‘change’, {type: Boolean})  checked!: boolean;<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>@Provide&#x2F;@Inject&#x2F;@ProvideReactive&#x2F;@InjectReactive<br>属性参数：</p>
+<p>@Provide(key?: string | symbol) &#x2F; @Inject(options?: { from?: InjectKey, default?: any } | InjectKey) decorator<br>@ProvideReactive(key?: string | symbol) &#x2F; @InjectReactive(options?: { from?: InjectKey, default?: any } | InjectKey) decorator<br>参数说明：</p>
+<p>提供&#x2F;注入装饰器,<br>key可以为string或者symbol类型,<br>相同点:Provide&#x2F;ProvideReactive提供的数据,在内部组件使用Inject&#x2F;InjectReactive都可取到<br>不同点:</p>
+<p>如果提供(ProvideReactive)的值被父组件修改，则子组件可以使用InjectReactive捕获此修改。<br>&#x2F;&#x2F; 最外层组件<br><template><br>  <div class=""><br>    <H3>ProvideInjectPage页面</H3><br>    <div><br>      在ProvideInjectPage页面使用Provide,ProvideReactive定义数据,不需要props传递数据<br>      然后爷爷套父母,父母套儿子,儿子套孙子,最后在孙子组件里面获取ProvideInjectPage<br>      里面的信息<br>    </div><br>    <hr/><br>    <provideGrandpa></provideGrandpa> <!--爷爷组件--><br>  </div><br></template></p>
+<script lang="ts">
+import {
+  Vue, Component, Provide, ProvideReactive,
+} from 'vue-property-decorator';
+import provideGrandpa from '@/components/ProvideGParentComponent.vue';
+
+@Component({
+  components: { provideGrandpa },
+})
+export default class ProvideInjectPage extends Vue {
+  @Provide('foo') foo = 'foo'
+  @ProvideReactive('reactiveKey1') reactiveKey1 = 'reactiveKey1'
+  @ProvideReactive('reactiveKey2') reactiveKey2 = 'reactiveKey2'
+
+  created() {
+    // 此处验证@Provide @ProvideReactive 键值被修改
+    this.foo = 'foo111'
+    this.reactiveKey1 = 'reactiveKey111'
+    this.reactiveKey2 = 'reactiveKey222'
+  }
+  }
+}
+</script>
+
+<p>&#x2F;&#x2F; …provideGrandpa调用父母组件<br><template><br>  <div class="hello"><br>    <ProvideParentComponent></ProvideParentComponent><br>  </div><br></template></p>
+<p>&#x2F;&#x2F; …ProvideParentComponent调用儿子组件<br><template><br>  <div class="hello"><br>    <ProvideSonComponent></ProvideSonComponent><br>  </div><br></template></p>
+<p>&#x2F;&#x2F; …ProvideSonComponent调用孙子组件<br><template><br>  <div class="hello"><br>    <ProvideGSonComponent></ProvideGSonComponent><br>  </div><br></template></p>
+<p>&#x2F;&#x2F; 孙子组件<ProvideGSonComponent>,经过多层引用后,在孙子组件使用Inject可以得到最外层组件provide的数据哦<br><template><br>  <div class="hello"><br>    <h3>孙子的组件</h3><br>    爷爷组件里面的foo:<br /><br>    爷爷组件里面的fooReactiveKey1:<br /><br>    爷爷组件里面的fooReactiveKey2:<br>  </div><br></template></p>
+<script lang="ts">
+import {
+  Component, Vue, Inject, InjectReactive,
+} from 'vue-property-decorator';
+
+@Component
+export default class ProvideGSonComponent extends Vue {
+  @Inject('foo') foo!: string
+  @InjectReactive('reactiveKey1') reactiveKey1!: string
+  @InjectReactive('reactiveKey2') reactiveKey2!: string
+}
+</script>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63<br>64<br>65<br>66<br>67<br>68<br>69<br>70<br>71<br>72<br>73<br>74<br>75<br>76<br>77<br>78<br>79<br>80<br>81<br>82<br>Mixins (在vue-class-component中定义)<br>在使用Vue进行开发时我们经常要用到混合,结合TypeScript之后我们有两种mixins的方法。</p>
+<p>一种是vue-class-component提供的.</p>
+<p>&#x2F;&#x2F;定义要混合的类 mixins.ts<br>import Vue from ‘vue’<br>import Component from ‘vue-class-component’</p>
+<p>@Component &#x2F;&#x2F; 一定要用Component修饰<br>export default class MyMixins extends Vue {<br>  value &#x3D; ‘Hello’<br>}</p>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>&#x2F;&#x2F; 引入<br>import Component, { mixins } from ‘vue-class-component’<br>import myMixins from ‘.&#x2F;Mixins’</p>
+<p>@Component<br>export default class Project extends mixins(myMixins) {<br>  created() {<br>    console.log(this.value)<br>  }<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>等同于</p>
+<p>&#x2F;&#x2F; Mixins.ts<br>&#x2F;&#x2F;定义要混合的类 mixins.ts<br>import Vue from ‘vue’<br>import { Component } from ‘vue-property-decorator’</p>
+<p>@Component &#x2F;&#x2F; 一定要用Component修饰<br>export default class MyMixins extends Vue {<br>  value &#x3D; ‘Hello’<br>}</p>
+<p>&#x2F;&#x2F; 引入</p>
+<p>import { Component } from ‘vue-property-decorator’<br>import myMixins from ‘.&#x2F;Mixins’</p>
+<p>@Component<br>export default class Project extends myMixins {<br>  created() {<br>    console.log(this.value)<br>  }<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>第二种方式是在@Component中混入.</p>
+<p>我们改造一下mixins.ts,定义vue&#x2F;type&#x2F;vue模块,实现Vue接口</p>
+<p>&#x2F;&#x2F; mixins.ts<br>import { Vue, Component } from ‘vue-property-decorator’;</p>
+<p>declare module ‘vue&#x2F;types&#x2F;vue’ {<br>    interface Vue {<br>        value: string;<br>    }<br>}</p>
+<p>@Component<br>export default class myMixins extends Vue {<br>    value &#x3D; ‘Hello’<br>}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>混入</p>
+<p>import { Vue, Component} from ‘vue-property-decorator’;<br>import myMixins from ‘.&#x2F;Mixins’;</p>
+<p>@Component({<br>    mixins: [myMixins],<br>    created(){<br>        console.log(this.value) &#x2F;&#x2F; &#x3D;&gt; Hello<br>    }<br>})<br>export default class myComponent extends Vue{}<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>总结: 两种方式不同的是在定义mixins时如果没有定义vue&#x2F;type&#x2F;vue模块, 那么在混入的时候就要继承该mixins; 如果定义vue&#x2F;types&#x2F;vue模块,在混入时可以在@Component中mixins直接混入。<br>————————————————<br>版权声明：本文为CSDN博主「定栓」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44116302/article/details/111225763">https://blog.csdn.net/weixin_44116302/article/details/111225763</a></p>
+
+    </article>
+    
+    <div class="read-nums">
+      <!-- id 将作为查询条件 -->
+      <span id="2023/07/05/vue中的装饰器/" class="leancloud_visitors" data-flag-title="Your Article Title">
+        <em class="post-meta-item-text">浏览量</em>
+        <i class="leancloud-visitors-count"></i>
+      </span>
+    </div>
+    <div class="comments-intro">
+      <h2>评论区</h2>
+      <p>欢迎你留下宝贵的意见，昵称输入QQ号会显示QQ头像哦~</p>
+    </div>
+    <div id="vcomments" class="vcomments"></div>
+    
+  </div>
+  <div class="article-catelogue">
+    <div class="article-catelogue--wrapper">
+      <div class="catelogue catelogue-1">
+        <h3>目录</h3>
+        <!-- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vue-property-decorator"><span class="toc-number">1.</span> <span class="toc-text">vue-property-decorator</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%EF%BC%9F%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">一？安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%EF%BC%9F%E5%BC%95%E5%85%A5"><span class="toc-number">1.2.</span> <span class="toc-text">二？引入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%EF%BC%9F-Component"><span class="toc-number">1.3.</span> <span class="toc-text">三？@Component</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%EF%BC%9F-Prop"><span class="toc-number">1.4.</span> <span class="toc-text">四？@Prop</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">父组件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">子组件:</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.1.</span> <span class="toc-text">syncedlike:</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.1.1.</span> <span class="toc-text">ProvideInjectPage页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.1.2.</span> <span class="toc-text">孙子的组件</span></a></li></ol></li></ol></li></ol> -->
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vue-property-decorator"><span class="toc-text">vue-property-decorator</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%EF%BC%9F%E5%AE%89%E8%A3%85"><span class="toc-text">一？安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%EF%BC%9F%E5%BC%95%E5%85%A5"><span class="toc-text">二？引入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%EF%BC%9F-Component"><span class="toc-text">三？@Component</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%EF%BC%9F-Prop"><span class="toc-text">四？@Prop</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">父组件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">子组件:</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text">syncedlike:</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">ProvideInjectPage页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text">孙子的组件</span></a></li></ol></li></ol></li></ol>
+      </div>
+      
+        <div class="catelogue catelogue-2">
+          
+            <p>
+              <span>上一篇：</span>
+              <a href="/2023/07/05/react基础/">react</a>
+            </p>
+           
+          
+            <p>
+              <span>下一篇</span>
+              <a href="/2023/07/05/webstorm/">webstorm</a>
+            </p>
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+<script src="http://cdn.yangxiang.cc/prism.js"></script>
+
+<script>
+  // var定义，避免pjax重新进来造成的重复声明错误
+  var config = JSON.parse('{"enable":true,"appId":"Pf8zCXGEH1qsprnWfikVVujL-gzGzoHsz","appKey":"qOqoiUHhH1TGtLRUYURkLRQX","placeholder":"请留下你宝贵的意见吧~","meta":["nick"],"recordIP":true,"visitor":true,"enableQQ":true}')
+  new Valine({
+    el: '#vcomments',
+    appId: config.appId,
+    appKey: config.appKey,
+    placeholder: config.placeholder,
+    meta: config.meta,
+    recordIP: config.recordIP,
+    visitor: config.visitor,
+    enableQQ: config.enableQQ,
+    path: '2023/07/05/vue中的装饰器/'
+  })
+</script>
+
+
+<script>
+  $(document).on('pjax:complete', function() {
+    const tocs = document.querySelector('.toc')
+    const links = tocs ? tocs.querySelectorAll('a') : []
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        const href = decodeURIComponent(e.href)
+        href.search(/#(.*)/)
+        const id = RegExp.$1
+        const target = document.querySelector('#' + id)
+        const top = target.offsetTop
+        document.documentElement.scrollTo({
+          top: top - 100,
+          behavior: 'smooth'
+        })
+        e.preventDefault()
+      })
+    })
+  })
+</script> 
+
+</div>
+      <div class="main-right-wrapper"><div class="main-right">
+  <div class="main-right--board">
+    <div class="main-right--title">
+      <h5>公告栏</h5>
+      <i class="iconfont icon-gonggao"></i>
+    </div>
+    <div class="main-right--content">
+      Hello~，欢迎你们来到我的博客小站，希望能在这里收获到有用的东西哦！ 
+    </div>
+  </div>
+
+  <div id="aplayer" class="main-right--music"></div>
+
+  <div class="operate-items">
+    <div class="operate-item backtop">
+      <i class="iconfont icon-huidaodingbu"></i>
+      <span>回到顶部</span>
+    </div>
+    
+    <div class="operate-item turn-comment hidden">
+      <i class="iconfont icon-pinglun"></i>
+      <span>查看评论</span>
+    </div>
+    
+  </div>
+
+  <!-- <div class="main-right--site">
+    <div class="main-right--power">
+      <p>Power By <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo</a>.</p>
+      <p>Theme：<a target="_blank" rel="noopener" href="https://github.com/Aizener/hexo-theme-cola">Cola.</a></p>
+    </div>
+    <p class="main-right--refer"><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/#/Integrated/index"></a> </p>
+  </div> -->
+</div>
+
+<script>
+  function setOperateItem () {
+    const reg = /\d{4}\/\d{2}\/\d{2}\/.+/
+    const path = location.pathname
+    const operateDom = document.querySelector('.main-right .operate-items')
+    const commentDom = document.querySelector('.turn-comment')
+    const cateloguDom = document.querySelector('.article-catelogue > .article-catelogue--wrapper');
+
+    if (commentDom) {
+      if (reg.test(path) || path.match(/\/log\/.+/)) {
+        commentDom.classList.remove('hidden')
+        const newDom = operateDom.cloneNode(true);
+        const _backtopDom = newDom.querySelector('.backtop');
+        const _commentDom = newDom.querySelector('.turn-comment');
+        console.log(_commentDom)
+        _backtopDom.addEventListener('click', () => backTopEvent());
+        _commentDom.addEventListener('click', () => commentDomEvent());
+
+        cateloguDom.appendChild(newDom);
+      } else {
+        commentDom.classList.add('hidden')
+      }
+    }
+  }
+
+  setOperateItem()
+  const musics = JSON.parse(`[{"name":"安河桥","artist":"宋冬野","url":"http://ting6.yymp3.net:82/new25/songdongye/11.mp3","cover":"https://img2.baidu.com/it/u=1260056724,1076343118&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"},{"name":"卡布达","artist":"暂无","url":"music/kabuda.mp3","cover":"https://img2.baidu.com/it/u=705831265,2862720033&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"}]`)
+  const ap = new APlayer({
+    container: document.querySelector('#aplayer'),
+    audio: musics,
+  })
+
+  $(document).on('pjax:complete', function() {
+    setOperateItem()
+  })
+
+  document.querySelector('.backtop').addEventListener('click', () => {
+    backTopEvent();
+  })
+  const dom = document.querySelector('.turn-comment')
+  dom && dom.addEventListener('click', () => {
+    commentDomEvent();
+  })
+
+  function backTopEvent() {
+    document.documentElement.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  function commentDomEvent() {
+    const commentDom = document.querySelector('.comments-intro')
+    if (!commentDom) return
+    const top = commentDom.offsetTop, height = commentDom.offsetHeight
+    document.documentElement.scrollTo({
+      top: top - 2 * height,
+      behavior: 'smooth'
+    })
+  }
+</script></div>
+    </section>
+  </div>
+  <div id="progress" class="progress"></div>
+  <div id="gray" class="gray"></div>
+
+  <script>
+    function initScroll () {
+      document.addEventListener('scroll', () => {
+        const doc = document.documentElement
+        const scrollTop = doc.scrollTop
+        const pageHeight = doc.offsetHeight
+        const clientHeight = doc.clientHeight
+        const ratio = scrollTop / (pageHeight - clientHeight)
+        const progress = document.querySelector('#progress')
+        const avatarImg = document.querySelector('.main-left--avatar')
+        progress.style.width = (100 * ratio) + '%'
+        avatarImg.style.transform = `rotate(${360 * ratio}deg)`
+      })
+    }
+
+    const rootPath = "/"
+
+    const checkAndSetArticlePageLayout = () => {
+      if (/^\/?\d{4}\/\d{2}\/\d{2}\/.*/.test(location.pathname.replace(rootPath, ''))) {
+        $('.main-container, .main-right, .main-right-wrapper').addClass('is-article')
+      } else {
+        $('.main-container, .main-right, .main-right-wrapper').removeClass('is-article')
+      }
+    }
+
+    const gray = "none"
+    const setGrayStyle = () => {
+      if (gray === 'none') {
+        return
+      } else if (gray === 'index') {
+        location.pathname === '/' ? $('#gray').show() : $('#gray').hide()
+      } else if (gray === 'all') {
+        $('#gray').show()
+      }
+    }
+    setGrayStyle()
+
+
+    window.onload = function () {
+      checkAndSetArticlePageLayout()
+      setTimeout(() => {
+        $('#load').slideUp()
+        $('#container').slideToggle()
+        setTimeout(() => {
+          initScroll();
+          window.loadImageFn();
+        }, 500)
+      }, 500)
+    }
+    
+    let status = 0
+    // 对所有链接跳转事件绑定pjax容器container
+    $(document).pjax('a[target!=_blank]', '#main-container', {
+      container: '#main-container',
+      fragment: '#main-container',
+      timeout: 8000
+    })
+
+    $(document).on('pjax:start', function() {
+    })
+    $(document).on('pjax:complete', function() {
+      status = 0
+      $('.main-container').addClass('to-up').on('animationend', function() {
+        $(this).removeClass('to-up')
+      })
+      setGrayStyle()
+      checkAndSetArticlePageLayout()
+    })
+    $(document).on('pjax:popstate', function() {
+      status = -1
+      checkAndSetArticlePageLayout()
+      // $('.main-container').fadeIn()
+    })
+  </script>
+</body>
+</html>

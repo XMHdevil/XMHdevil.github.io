@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>我的技术与生活——初次建站 | Hexo</title>
+  <title>我的技术与生活——浏览器的工作原理 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" href="/imgs/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/css/public.css" />
@@ -16,7 +16,7 @@
 
   <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
   <script>
-    document.title = `我的技术与生活——初次建站`
+    document.title = `我的技术与生活——浏览器的工作原理`
   </script>
 <meta name="generator" content="Hexo 6.3.0"></head>
 
@@ -365,25 +365,198 @@ pre:active {
 
 <div class="article-container">
   <div class="article">
-    <h1 class="article-title">初次建站</h1>
+    <h1 class="article-title">浏览器的工作原理</h1>
     <div class="article-info">
       <div class="article-info--item">
         <div class="article-info--info">
           
+          <div class="article-info--categories">
+            <span>分类：</span>
+            <a class="category-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+          </div>
           
-          <p class="article-info--date">日期：2023-07-03 17:02:43</p>
+          
+          <div class="article-info--tags">
+            <span>标签：</span>
+            <a class="tag-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" rel="tag">浏览器工作原理</a>
+          </div>
+          
+          <p class="article-info--date">日期：2023-07-04 09:38:03</p>
         </div>
         <img src="/imgs/default-cover.webp" alt="" class="article-cover">
       </div>
     </div>
     <article class="article-content">
-      <h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>很是迷茫</p>
+      <h2 id="浏览器的工作原理"><a href="#浏览器的工作原理" class="headerlink" title="浏览器的工作原理"></a>浏览器的工作原理</h2><h3 id="浏览器的工作流程"><a href="#浏览器的工作流程" class="headerlink" title="浏览器的工作流程"></a>浏览器的工作流程</h3><ol>
+<li>浏览器首先使用HTTP协议或者HTTPS协议，向服务端请求页面；</li>
+<li>把请求回来的HTML代码经过解析，构建成DOM树；</li>
+<li>计算DOM树上的CSS属性；</li>
+<li>根据CSS属性对元素逐个进行渲染，得到内存中的位图；</li>
+<li>一个可选的步骤是对位图进行合成，这会极大地增加后续绘制的速度；</li>
+<li>合成只会，再绘制到界面上。</li>
+</ol>
+<h3 id="浏览器的标准"><a href="#浏览器的标准" class="headerlink" title="浏览器的标准"></a>浏览器的标准</h3><p>HTTP1.1 <a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc2616">https://tools.ietf.org/html/rfc2616</a></p>
+<p>HTTP1.1 <a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc7234">https://tools.ietf.org/html/rfc7234</a></p>
+<p>http协议是基于tcp协议的基础上出现的。</p>
+<h3 id="HTTP-Method"><a href="#HTTP-Method" class="headerlink" title="HTTP Method"></a>HTTP Method</h3><p>HTTP的一些请求方法：</p>
+<ul>
+<li>GET  <strong>通过一个地址栏去访问一个页面</strong></li>
+<li>POST <strong>表单提交</strong></li>
+<li>HEAD <strong>由js发起和类似，只返回响应头</strong></li>
+<li>PUT ****</li>
+<li>DELETE</li>
+<li>CONNECT <strong>大部分是用于https等</strong></li>
+<li>OPTIONS <strong>只用于调试</strong></li>
+<li>TRACE <strong>一般是用于调试</strong></li>
+</ul>
+<h3 id="HTTP-Status-code"><a href="#HTTP-Status-code" class="headerlink" title="HTTP Status code"></a>HTTP Status code</h3><p>响应的编码：</p>
+<ul>
+<li>1xx： 临时回应，表示客户端请继续（直接被http库处理掉）</li>
+<li>2xx：请求成功</li>
+<li>3xx：表示请求的目标有变化，希望客户的进一步处理。</li>
+<li>4xx：客户端请求错误</li>
+<li>5xx：服务端请求错误</li>
+</ul>
+<h3 id="HTTP-Head"><a href="#HTTP-Head" class="headerlink" title="HTTP Head"></a>HTTP Head</h3><table>
+<thead>
+<tr>
+<th>Request Header</th>
+<th>规定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Accept</td>
+<td>浏览器端接受的格式</td>
+</tr>
+<tr>
+<td>Accept-Encoding：</td>
+<td>浏览器端接受的编码方式</td>
+</tr>
+<tr>
+<td>Accept-Language</td>
+<td>浏览器端接受的语言，用于服务端判断多语言</td>
+</tr>
+<tr>
+<td>Cache-Control</td>
+<td>控制缓存的时效性</td>
+</tr>
+<tr>
+<td>Connection</td>
+<td>连接方式，如果是keep-alive，且服务端支持，则会复用连接</td>
+</tr>
+<tr>
+<td>Host</td>
+<td>Http访问使用的域名。</td>
+</tr>
+<tr>
+<td>if-Modified-Since</td>
+<td>上次访问时的更改时间，如果服务端认为此时间后自己没有更新，则会给出304响应。</td>
+</tr>
+<tr>
+<td>if-None-Match</td>
+<td>次访问时使用的E-tag，通常是页面的信息摘要，这个比更改时间更准确一些</td>
+</tr>
+<tr>
+<td>User-Agent</td>
+<td>客户端标识，因为一些历史原因，这是一笔糊涂账，多数浏览器的这个字段都十分复杂，区别十分微妙。</td>
+</tr>
+<tr>
+<td>Cookie</td>
+<td>客户端存储的cookie字符串。</td>
+</tr>
+</tbody></table>
+<h3 id="Response-Header"><a href="#Response-Header" class="headerlink" title="Response Header"></a>Response Header</h3><table>
+<thead>
+<tr>
+<th>Response Header</th>
+<th>规定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cache-Control</td>
+<td>缓存控制，用于通知各级缓存保存的时间，例如max-age&#x3D;0，表示不要缓存。</td>
+</tr>
+<tr>
+<td>Connection</td>
+<td>连接类型，Keep-Alive表示复用连接</td>
+</tr>
+<tr>
+<td>Content-Encoding</td>
+<td>内容编码方式，通常是gzip。</td>
+</tr>
+<tr>
+<td>Content-Length</td>
+<td>内容长度，有利于浏览器判断内容是否已经结束。</td>
+</tr>
+<tr>
+<td>Content-Type</td>
+<td>内容类型，所有请求网页的都是text&#x2F;html。</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>当前的服务器日期。</td>
+</tr>
+<tr>
+<td>Etag</td>
+<td>页面的信息摘要，用于判断是否需要重新到服务端取回页面。</td>
+</tr>
+<tr>
+<td>Expires</td>
+<td>过期时间，用于判断下次请求是否需要到服务端取回页面</td>
+</tr>
+<tr>
+<td>Keep-Alive</td>
+<td>保持连接不断时需要的一些信息，如timeout&#x3D;5，max&#x3D;100,</td>
+</tr>
+<tr>
+<td>Last-Modified</td>
+<td>页面上次修改的时间</td>
+</tr>
+<tr>
+<td>Server</td>
+<td>服务端软件的类型</td>
+</tr>
+<tr>
+<td>Set-Cookie</td>
+<td>设置cookie，可以存在多个。</td>
+</tr>
+<tr>
+<td>Via</td>
+<td>服务端的请求链接，对一些调试场景至关重要的一个头。</td>
+</tr>
+</tbody></table>
+<h3 id="HTTP-Request-Body"><a href="#HTTP-Request-Body" class="headerlink" title="HTTP Request Body"></a>HTTP Request Body</h3><ul>
+<li>application&#x2F;json</li>
+<li>application&#x2F;x-www-form-urlencoded</li>
+<li>multipart&#x2F;form-data</li>
+<li>text&#x2F;xml</li>
+</ul>
+<h3 id="从输入URL到页面展示，这个中间发生了什么"><a href="#从输入URL到页面展示，这个中间发生了什么" class="headerlink" title="从输入URL到页面展示，这个中间发生了什么"></a>从输入URL到页面展示，这个中间发生了什么</h3><ol>
+<li>用户输入（浏览器进程）</li>
+<li>处理输入信息（浏览器进程）</li>
+<li>开始导航（浏览器进程）</li>
+<li>发起URl请求（网络进程）</li>
+<li>重定向（浏览器进程）</li>
+<li>发起URL请求（网络进程）</li>
+<li>读取响应头信息（网络进程）</li>
+<li>准备渲染过程（浏览器进程）</li>
+<li>提交文档（渲染过程）（当浏览器进程接受到网络进程的响应头数据之后，便向渲染进程发起 “提交文档”的消息，渲染进程接受到“提交文档”的消息之后，会和网络进程建立传输数据的“管道”，就是IPC。等文档数据传输完成之后，渲染进程会返回“确认提交”的消息给浏览器进程。浏览器进程在收到“确认提交“消息之后，会更新浏览器界面状态，包括了安全状态、地址栏的URL、前进后退的历史状态，并更新Web界面）。</li>
+<li>确认文档被提交（浏览器进程）</li>
+<li>读取响应体数据（网络进程）</li>
+<li>页面解析和子资源加载（渲染进程）</li>
+<li>页面加载完成（浏览器进程）</li>
+</ol>
+<p>三个进程：浏览器进程，网络进程，渲染进程</p>
+<h4 id="浏览器进程的职责"><a href="#浏览器进程的职责" class="headerlink" title="浏览器进程的职责"></a>浏览器进程的职责</h4><p>主要负责用户交互，子进程管理和文件储存等功能。</p>
+<h4 id="网络进程的职责"><a href="#网络进程的职责" class="headerlink" title="网络进程的职责"></a>网络进程的职责</h4><p>网络进程是面向渲染进程和浏览器等提供网络下载功能。</p>
+<h4 id="渲染进程的职责"><a href="#渲染进程的职责" class="headerlink" title="渲染进程的职责"></a>渲染进程的职责</h4><p>渲染进程的主要职责是把从网络下载的HTML、JavaScript、Css、图片等资源解析为可以显示和交互的页面。</p>
+<h3 id="渲染进程"><a href="#渲染进程" class="headerlink" title="渲染进程"></a>渲染进程</h3><p>默认情况下，Chorme会为每一个页面分配一个新的渲染进程。</p>
 
     </article>
     
     <div class="read-nums">
       <!-- id 将作为查询条件 -->
-      <span id="log/oneday.html" class="leancloud_visitors" data-flag-title="Your Article Title">
+      <span id="2023/07/04/浏览器的工作原理/" class="leancloud_visitors" data-flag-title="Your Article Title">
         <em class="post-meta-item-text">浏览量</em>
         <i class="leancloud-visitors-count"></i>
       </span>
@@ -399,9 +572,24 @@ pre:active {
     <div class="article-catelogue--wrapper">
       <div class="catelogue catelogue-1">
         <h3>目录</h3>
-        <!-- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text"></span></a></li></ol> -->
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-text"></span></a></li></ol>
+        <!-- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">浏览器的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">浏览器的工作流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E6%A0%87%E5%87%86"><span class="toc-number">1.2.</span> <span class="toc-text">浏览器的标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-Method"><span class="toc-number">1.3.</span> <span class="toc-text">HTTP Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-Status-code"><span class="toc-number">1.4.</span> <span class="toc-text">HTTP Status code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-Head"><span class="toc-number">1.5.</span> <span class="toc-text">HTTP Head</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Response-Header"><span class="toc-number">1.6.</span> <span class="toc-text">Response Header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-Request-Body"><span class="toc-number">1.7.</span> <span class="toc-text">HTTP Request Body</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E8%BE%93%E5%85%A5URL%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%A4%BA%EF%BC%8C%E8%BF%99%E4%B8%AA%E4%B8%AD%E9%97%B4%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">1.8.</span> <span class="toc-text">从输入URL到页面展示，这个中间发生了什么</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%81%8C%E8%B4%A3"><span class="toc-number">1.8.1.</span> <span class="toc-text">浏览器进程的职责</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%81%8C%E8%B4%A3"><span class="toc-number">1.8.2.</span> <span class="toc-text">网络进程的职责</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%81%8C%E8%B4%A3"><span class="toc-number">1.8.3.</span> <span class="toc-text">渲染进程的职责</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.9.</span> <span class="toc-text">渲染进程</span></a></li></ol></li></ol> -->
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">浏览器的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">浏览器的工作流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E6%A0%87%E5%87%86"><span class="toc-text">浏览器的标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-Method"><span class="toc-text">HTTP Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-Status-code"><span class="toc-text">HTTP Status code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-Head"><span class="toc-text">HTTP Head</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Response-Header"><span class="toc-text">Response Header</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-Request-Body"><span class="toc-text">HTTP Request Body</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E8%BE%93%E5%85%A5URL%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%A4%BA%EF%BC%8C%E8%BF%99%E4%B8%AA%E4%B8%AD%E9%97%B4%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-text">从输入URL到页面展示，这个中间发生了什么</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%81%8C%E8%B4%A3"><span class="toc-text">浏览器进程的职责</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%81%8C%E8%B4%A3"><span class="toc-text">网络进程的职责</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%81%8C%E8%B4%A3"><span class="toc-text">渲染进程的职责</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B"><span class="toc-text">渲染进程</span></a></li></ol></li></ol>
       </div>
+      
+        <div class="catelogue catelogue-2">
+          
+            <p>
+              <span>上一篇：</span>
+              <a href="/2023/07/05/css/">CSS</a>
+            </p>
+           
+          
+            <p>
+              <span>下一篇</span>
+              <a href="/2023/07/04/前端浏览器兼容问题/">浏览器兼容问题</a>
+            </p>
+          
+        </div>
       
     </div>
   </div>
@@ -421,7 +609,7 @@ pre:active {
     recordIP: config.recordIP,
     visitor: config.visitor,
     enableQQ: config.enableQQ,
-    path: 'log/oneday.html'
+    path: '2023/07/04/浏览器的工作原理/'
   })
 </script>
 

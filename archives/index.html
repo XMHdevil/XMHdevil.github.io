@@ -173,12 +173,12 @@
             <span class="header-menu--span">日志</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="/link">
             <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
             <span class="header-menu--span">友情链接</span>
           </a>
-        </li>
+        </li> -->
         <li>
           <a href="/about">
             <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
@@ -194,7 +194,7 @@
   const ipt = document.querySelector('#search-input')
   const btn = document.querySelector('#search-btn')
   const layer = document.querySelector('#search-layer')
-  const posts = JSON.parse(`[{"title":"Hello World","path":"2023/07/03/hello-world/"},{"title":"TypeScript","path":"2023/07/03/typeScript/"}]`)
+  const posts = JSON.parse(`[{"title":"SVG","path":"2023/07/05/SVG/"},{"title":"Canvas","path":"2023/07/05/Canvas/"},{"title":"CSS","path":"2023/07/05/css/"},{"title":"Hello World","path":"2023/07/03/hello-world/"},{"title":"react","path":"2023/07/05/react基础/"},{"title":"TypeScript","path":"2023/07/03/typeScript/"},{"title":"vue-property-decorator","path":"2023/07/05/vue中的装饰器/"},{"title":"浏览器兼容问题","path":"2023/07/04/前端浏览器兼容问题/"},{"title":"浏览器的工作原理","path":"2023/07/04/浏览器的工作原理/"},{"title":"webstorm","path":"2023/07/05/webstorm/"},{"title":"常用函数(js)","path":"2023/07/05/常用js函数/"}]`)
   ipt.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
       handleSearch()
@@ -259,13 +259,13 @@
       <div class="main-left--statics">
         <a href="/categories">
           <div>
-            <span>0</span>
+            <span>7</span>
             <span>分类</span>
           </div>
         </a>
         <a href="/tags">
           <div>
-            <span>0</span>
+            <span>10</span>
             <span>标签</span>
           </div>
         </a>
@@ -297,13 +297,6 @@
         </li>
       
         <li>
-          <a href="/link">
-            <span class="header-menu--span">友情链接</span>
-            <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
-          </a>
-        </li>
-      
-        <li>
           <a href="/about">
             <span class="header-menu--span">关于自己</span>
             <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
@@ -328,7 +321,7 @@
       </h5>
       <p class="main-left--subtitle">
         <span>文章数目：</span>
-        <span>2 篇</span>
+        <span>11 篇</span>
       </p>
       <p class="main-left--subtitle">
         <span>最近动态：</span>
@@ -336,7 +329,7 @@
       </p>
       <p class="main-left--subtitle">
         <span>上线时间：</span>
-        <span>1天</span>
+        <span>3天</span>
       </p>
       <p class="main-left--subtitle">
         <span>当前版本：</span>
@@ -361,6 +354,27 @@
                                     
                                         <li class="archive-list__post">
                                             <div>
+                                                <a href="/2023/07/05/SVG/">SVG</a>
+                                                <span>07月05日</span>
+                                            </div>
+                                        </li>
+                                    
+                                        <li class="archive-list__post">
+                                            <div>
+                                                <a href="/2023/07/05/Canvas/">Canvas</a>
+                                                <span>07月05日</span>
+                                            </div>
+                                        </li>
+                                    
+                                        <li class="archive-list__post">
+                                            <div>
+                                                <a href="/2023/07/05/css/">CSS</a>
+                                                <span>07月05日</span>
+                                            </div>
+                                        </li>
+                                    
+                                        <li class="archive-list__post">
+                                            <div>
                                                 <a href="/2023/07/03/hello-world/">Hello World</a>
                                                 <span>07月03日</span>
                                             </div>
@@ -368,8 +382,50 @@
                                     
                                         <li class="archive-list__post">
                                             <div>
+                                                <a href="/2023/07/05/react基础/">react</a>
+                                                <span>07月05日</span>
+                                            </div>
+                                        </li>
+                                    
+                                        <li class="archive-list__post">
+                                            <div>
                                                 <a href="/2023/07/03/typeScript/">TypeScript</a>
                                                 <span>07月03日</span>
+                                            </div>
+                                        </li>
+                                    
+                                        <li class="archive-list__post">
+                                            <div>
+                                                <a href="/2023/07/05/vue中的装饰器/">vue-property-decorator</a>
+                                                <span>07月05日</span>
+                                            </div>
+                                        </li>
+                                    
+                                        <li class="archive-list__post">
+                                            <div>
+                                                <a href="/2023/07/04/前端浏览器兼容问题/">浏览器兼容问题</a>
+                                                <span>07月04日</span>
+                                            </div>
+                                        </li>
+                                    
+                                        <li class="archive-list__post">
+                                            <div>
+                                                <a href="/2023/07/04/浏览器的工作原理/">浏览器的工作原理</a>
+                                                <span>07月04日</span>
+                                            </div>
+                                        </li>
+                                    
+                                        <li class="archive-list__post">
+                                            <div>
+                                                <a href="/2023/07/05/webstorm/">webstorm</a>
+                                                <span>07月05日</span>
+                                            </div>
+                                        </li>
+                                    
+                                        <li class="archive-list__post">
+                                            <div>
+                                                <a href="/2023/07/05/常用js函数/">常用函数(js)</a>
+                                                <span>07月05日</span>
                                             </div>
                                         </li>
                                     

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>我的技术与生活——categories | Hexo</title>
+  <title>我的技术与生活——常用函数(js) | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" href="/imgs/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/css/public.css" />
@@ -16,7 +16,7 @@
 
   <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
   <script>
-    document.title = `我的技术与生活——categories`
+    document.title = `我的技术与生活——常用函数(js)`
   </script>
 <meta name="generator" content="Hexo 6.3.0"></head>
 
@@ -341,12 +341,135 @@
       <div id="main-container" class="main-container">
 
 
-  <div class="categories">
-  <h2 class="categories-title">小站分类</h2>
-  <div class="categories-list">
-    <ul class="categories-list"><li class="categories-list-item"><a class="categories-list-link" href="/categories/TS/">TS</a><span class="categories-list-count">1</span></li><li class="categories-list-item"><a class="categories-list-link" href="/categories/js/">js</a><span class="categories-list-count">1</span></li><li class="categories-list-item"><a class="categories-list-link" href="/categories/react/">react</a><span class="categories-list-count">1</span></li><li class="categories-list-item"><a class="categories-list-link" href="/categories/vue/">vue</a><span class="categories-list-count">1</span></li><li class="categories-list-item"><a class="categories-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a><span class="categories-list-count">1</span></li><li class="categories-list-item"><a class="categories-list-link" href="/categories/%E6%A0%B7%E5%BC%8F/">样式</a><span class="categories-list-count">3</span></li><li class="categories-list-item"><a class="categories-list-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a><span class="categories-list-count">2</span></li></ul>
+  <style>
+pre::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+  background-color:#F5F5F5;
+}
+/*定义滚动条轨道
+内阴影+圆角*/
+pre::-webkit-scrollbar-track {
+  background-color:#F5F5F5;
+}
+/*定义滑块
+内阴影+圆角*/
+pre::-webkit-scrollbar-thumb {
+  background-color: rgb(69, 83, 100);
+}
+
+pre:active {
+  background-color: rgb(81, 95, 116);
+}
+</style>
+
+<div class="article-container">
+  <div class="article">
+    <h1 class="article-title">常用函数(js)</h1>
+    <div class="article-info">
+      <div class="article-info--item">
+        <div class="article-info--info">
+          
+          <div class="article-info--categories">
+            <span>分类：</span>
+            <a class="category-link" href="/categories/js/">Js</a>
+          </div>
+          
+          
+          <div class="article-info--tags">
+            <span>标签：</span>
+            <a class="tag-link" href="/tags/%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" rel="tag">开发常用函数</a>
+          </div>
+          
+          <p class="article-info--date">日期：2023-07-05 18:34:55</p>
+        </div>
+        <img src="/imgs/default-cover.webp" alt="" class="article-cover">
+      </div>
+    </div>
+    <article class="article-content">
+      <h2 id="开发中常用的函数"><a href="#开发中常用的函数" class="headerlink" title="开发中常用的函数"></a>开发中常用的函数</h2>
+    </article>
+    
+    <div class="read-nums">
+      <!-- id 将作为查询条件 -->
+      <span id="2023/07/05/常用js函数/" class="leancloud_visitors" data-flag-title="Your Article Title">
+        <em class="post-meta-item-text">浏览量</em>
+        <i class="leancloud-visitors-count"></i>
+      </span>
+    </div>
+    <div class="comments-intro">
+      <h2>评论区</h2>
+      <p>欢迎你留下宝贵的意见，昵称输入QQ号会显示QQ头像哦~</p>
+    </div>
+    <div id="vcomments" class="vcomments"></div>
+    
+  </div>
+  <div class="article-catelogue">
+    <div class="article-catelogue--wrapper">
+      <div class="catelogue catelogue-1">
+        <h3>目录</h3>
+        <!-- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">开发中常用的函数</span></a></li></ol> -->
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-text">开发中常用的函数</span></a></li></ol>
+      </div>
+      
+        <div class="catelogue catelogue-2">
+          
+            <p>
+              <span>上一篇：</span>
+              <a href="/2023/07/05/Canvas/">Canvas</a>
+            </p>
+           
+          
+            <p>
+              <span>下一篇</span>
+              <a href="/2023/07/05/react基础/">react</a>
+            </p>
+          
+        </div>
+      
+    </div>
   </div>
 </div>
+
+<script src="http://cdn.yangxiang.cc/prism.js"></script>
+
+<script>
+  // var定义，避免pjax重新进来造成的重复声明错误
+  var config = JSON.parse('{"enable":true,"appId":"Pf8zCXGEH1qsprnWfikVVujL-gzGzoHsz","appKey":"qOqoiUHhH1TGtLRUYURkLRQX","placeholder":"请留下你宝贵的意见吧~","meta":["nick"],"recordIP":true,"visitor":true,"enableQQ":true}')
+  new Valine({
+    el: '#vcomments',
+    appId: config.appId,
+    appKey: config.appKey,
+    placeholder: config.placeholder,
+    meta: config.meta,
+    recordIP: config.recordIP,
+    visitor: config.visitor,
+    enableQQ: config.enableQQ,
+    path: '2023/07/05/常用js函数/'
+  })
+</script>
+
+
+<script>
+  $(document).on('pjax:complete', function() {
+    const tocs = document.querySelector('.toc')
+    const links = tocs ? tocs.querySelectorAll('a') : []
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        const href = decodeURIComponent(e.href)
+        href.search(/#(.*)/)
+        const id = RegExp.$1
+        const target = document.querySelector('#' + id)
+        const top = target.offsetTop
+        document.documentElement.scrollTo({
+          top: top - 100,
+          behavior: 'smooth'
+        })
+        e.preventDefault()
+      })
+    })
+  })
+</script> 
 
 </div>
       <div class="main-right-wrapper"><div class="main-right">

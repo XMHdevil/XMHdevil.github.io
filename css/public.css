@@ -447,6 +447,8 @@ input {
   margin-top: 15px;
   box-shadow: 0 0 5px #333;
   background-color: #fff;
+  max-height: 400px;
+  overflow: auto;
 }
 .article-catelogue .catelogue-1 {
   margin-top: 0;
